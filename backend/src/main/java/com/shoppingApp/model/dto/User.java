@@ -1,6 +1,7 @@
 package com.shoppingApp.model.dto;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 public class User {
 
@@ -49,5 +50,18 @@ public class User {
 
   public void setFirst_name(String first_name) {
     this.first_name = first_name;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    User user = (User) o;
+    return user_id == user.user_id && Objects.equals(cart, user.cart) && Objects.equals(first_name, user.first_name) && Objects.equals(last_name, user.last_name) && Objects.equals(password, user.password);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(cart, user_id, first_name, last_name, password);
   }
 }

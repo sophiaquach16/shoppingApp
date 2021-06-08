@@ -5,14 +5,17 @@ import com.shoppingApp.model.dao.UserDao;
 import com.shoppingApp.model.dto.Product;
 import com.shoppingApp.model.dto.User;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
 
-@Controller
+@RestController
+@RequestMapping("/api/")
 public class controller {
   @Autowired
   ProductDao productDao;
@@ -22,39 +25,44 @@ public class controller {
 
   //get all products
   @GetMapping("allProducts")
-  public String displayProducts(Model model) {
+  public List<Product> displayProducts() {
     List<Product> products=productDao.getAllProducts();
-    model.addAttribute("products", products);
-    return "products";
+    return products;
   }
   //get cart for user
   @GetMapping("cart")
-  public String getCartForUser(Integer id, Model model) {
-    User user=userDao.getUserById(id.intValue());
-    model.addAttribute("user", user);
-    model.addAttribute("cart", user.getCart());
-    return "cart";
+  public HashMap<Product, Integer> getCartForUser(int id) {
+    User user=userDao.getUserById(id);
+    return user.getCart();
   }
   //add product to cart
-  @PostMapping("addProductToCart")
-  public String addProductToCart(HttpServletRequest req){
-    String pid = req.getParameter("product_id");
-    Product product=productDao.getProductById(pid);
-    String uid = req.getParameter("user_id");
-    int user_id = Integer.parseInt(uid);
-
-    productDao.addProductToCart(product, user_id);
-    return "redirect:/products";
+  @PutMapping("{id}/addProductToCart")
+  public ResponseEntity addProductToCart(@PathVariable int id, @ReqestBody Product product){
+    ResponseEntity response = new ResponseEntity(HttpStatus.OK);
+    if(productDao.getProductById(product.getUnique_Id==null)){
+      response = new ResponseEntity(HttpStatus.UNPROCESSABLE_ENTITY);
+      return response;
+    }
+    else if(userDao.getUserById(id)==null){
+      response = new ResponseEntity(HttpStatus.UNPROCESSABLE_ENTITY);
+      return response;
+    }
+    productDao.addProductToCart(product, id);
+    return response;
   }
   //delete product from cart
-  @PostMapping("removeProductFromCart")
-  public String removeProductToCart(HttpServletRequest req){
-    String pid = req.getParameter("product_id");
-    Product product=productDao.getProductById(pid);
-    String uid = req.getParameter("user_id");
-    int user_id = Integer.parseInt(uid);
-
-    productDao.deleteProductFromCart(product, user_id);
-    return "redirect:/products";
+  @DeleteMapping("{id}/removeProductFromCart")
+  public ResponseEntity removeProductToCart(@PathVariable int id, @ReqestBody Product product){
+    ResponseEntity response = new ResponseEntity(HttpStatus.OK);
+    if(productDao.getProductById(product.getUnique_Id==null)){
+      response = new ResponseEntity(HttpStatus.UNPROCESSABLE_ENTITY);
+      return response;
+    }
+    else if(userDao.getUserById(id)==null){
+      response = new ResponseEntity(HttpStatus.UNPROCESSABLE_ENTITY);
+      return response;
+    }
+    productDao.deleteProductFromCart(product, id);
+    return response;
   }
 }

@@ -1,0 +1,27 @@
+  /*All of the footer formatting*/
+  #footer {
+    padding: 5px 30px;
+    background-color: #e6e6e6;
+  }
+  
+  .footer-brand {
+    padding-top: 5px;
+    text-align: right;
+  }
+  
+  .footer-item {
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+  
+  .footer-item a {
+    color: #212529;
+  }
+  
+  .footer-item a:hover {
+    color: #6c757d;
+  }
+  
+  #footer .row {
+    margin: 20px 0 20px 0;
+  }

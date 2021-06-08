@@ -1,4 +1,7 @@
 package com.shoppingApp.model.dao;
 
-public class ProductDaoImpl {
+import org.springframework.stereotype.Repository;
+
+@Repository
+public class ProductDaoImpl implements ProductDao {
 }

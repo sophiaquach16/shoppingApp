@@ -11,7 +11,7 @@ public interface ProductDao {
   void deleteProductById(String product_id);
   void updateProduct(Product product);
 
-  Product addProductToCart(Product product, int user_id);
-  Product deleteProductFromCart(Product product, int user_id);
+  void addProductToCart(Product product, int user_id);
+  void deleteProductFromCart(Product product, int user_id);
 
 }

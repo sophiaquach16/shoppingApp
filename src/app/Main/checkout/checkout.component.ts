@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-checkout',
@@ -7,9 +10,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CheckoutComponent implements OnInit {
 
-  constructor() { }
+  firstname = "";
+  lastname = "";
+  mobnumber = "";
+  credit = "";
+  ccname = "";
+  ccnumber = "";
+  username = "";
+  address = "";
+  address2 = "";
+  country = "";
+  province = "";
+  zip = "";
 
-  ngOnInit(): void {
-  }
+  constructor(private formBuilder: FormBuilder) {}
+
+  
+
+  ngOnInit(): void {}
+
+  onSubmit() { } 
+
 
 }

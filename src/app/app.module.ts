@@ -10,6 +10,7 @@ import { HomeComponent } from './Main/home/home.component';
 import { CartComponent } from './Main/cart/cart.component';
 import { CheckoutComponent } from './Main/checkout/checkout.component';
 import { ProfileUserComponent } from './Main/profile-user/profile-user.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,9 @@ import { ProfileUserComponent } from './Main/profile-user/profile-user.component
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

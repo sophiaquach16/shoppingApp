@@ -4,7 +4,7 @@ package com.shoppingApp.model.dto;
 import java.util.Objects;
 
 public class Product {
-  String unique_id;
+  String product_id;
   String product_url;
   String product_name;
   String product_category_tree;
@@ -17,12 +17,12 @@ public class Product {
   int overall_rating;
   String brand;
 
-  public String getUnique_id() {
-    return unique_id;
+  public String getProduct_id() {
+    return product_id;
   }
 
-  public void setUnique_id(String unique_id) {
-    this.unique_id = unique_id;
+  public void setProduct_id(String product_id) {
+    this.product_id = product_id;
   }
 
   public String getProduct_url() {
@@ -118,11 +118,11 @@ public class Product {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
     Product product = (Product) o;
-    return retail_price == product.retail_price && discounted_price == product.discounted_price && product_rating == product.product_rating && overall_rating == product.overall_rating && Objects.equals(unique_id, product.unique_id) && Objects.equals(product_url, product.product_url) && Objects.equals(product_name, product.product_name) && Objects.equals(product_category_tree, product.product_category_tree) && Objects.equals(pid, product.pid) && Objects.equals(image, product.image) && Objects.equals(description, product.description) && Objects.equals(brand, product.brand);
+    return retail_price == product.retail_price && discounted_price == product.discounted_price && product_rating == product.product_rating && overall_rating == product.overall_rating && Objects.equals(product_id, product.product_id) && Objects.equals(product_url, product.product_url) && Objects.equals(product_name, product.product_name) && Objects.equals(product_category_tree, product.product_category_tree) && Objects.equals(pid, product.pid) && Objects.equals(image, product.image) && Objects.equals(description, product.description) && Objects.equals(brand, product.brand);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(unique_id, product_url, product_name, product_category_tree, pid, retail_price, discounted_price, image, description, product_rating, overall_rating, brand);
+    return Objects.hash(product_id, product_url, product_name, product_category_tree, pid, retail_price, discounted_price, image, description, product_rating, overall_rating, brand);
   }
 }

@@ -13,6 +13,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+//todo error handling
+
 @Repository
 public class UserDaoImpl implements UserDao{
   @Autowired
@@ -77,7 +79,6 @@ public class UserDaoImpl implements UserDao{
     }catch (Exception e){
       return;
     }
-    return;
   }
   @Transactional
   public void addUserCart(User user){
@@ -87,11 +88,11 @@ public class UserDaoImpl implements UserDao{
 
       try {
         final String SELECT_PRODUCT_BY_ID = "SELECT `count` FROM Cart WHERE user_id = ? AND product_id=?";
-        int count = jdbc.queryForObject(SELECT_PRODUCT_BY_ID, Integer.class, user.getUser_id(), product.getUnique_id());
+        int count = jdbc.queryForObject(SELECT_PRODUCT_BY_ID, Integer.class, user.getUser_id(), product.getProduct_id());
         count++;
-        jdbc.update(UPDATE_PRODUCT_IN_CART, count, product.getUnique_id(), user.getUser_id());
-      } catch (DataAccessException ex) {
-        jdbc.update(INSERT_PRODUCT_IN_CART, product.getUnique_id(), user.getUser_id(), 1);
+        jdbc.update(UPDATE_PRODUCT_IN_CART, count, product.getProduct_id(), user.getUser_id());
+      } catch (Exception ex) {
+        jdbc.update(INSERT_PRODUCT_IN_CART, product.getProduct_id(), user.getUser_id(), 1);
         return;
       }
     }
@@ -99,12 +100,16 @@ public class UserDaoImpl implements UserDao{
 
   @Transactional
   public User addCartToUser(User user){
-    final String SELECT_ALL_PRODUCT = "SELECT * FROM Product JOIN Cart ON Product.uniq_id=Cart.product_id WHERE Cart.user_id=?";
+    final String SELECT_ALL_PRODUCT = "SELECT * FROM Product JOIN Cart ON Product.product_id=Cart.product_id WHERE Cart.user_id=?";
     List<Product> products= jdbc.query(SELECT_ALL_PRODUCT, new ProductDaoImpl.ProductMapper(), user.getUser_id());
-    final String SELECT_PRODUCT_COUNT = "SELECT `count` FROM Cart WHERE uniq_id = ? AND product_id=?";
-    for(Product product: products) {
-      int count = jdbc.queryForObject(SELECT_PRODUCT_COUNT, Integer.class, user.getUser_id(), product.getUnique_id());
-      user.getCart().put(product, count);
+    final String SELECT_PRODUCT_COUNT = "SELECT `count` FROM Cart WHERE user_id = ? AND product_id=?";
+    try {
+      for (Product product : products) {
+        int count = jdbc.queryForObject(SELECT_PRODUCT_COUNT, Integer.class, user.getUser_id(), product.getProduct_id());
+        user.getCart().put(product, count);
+      }
+    }catch (Exception e){
+      return null;
     }
     return user;
   }

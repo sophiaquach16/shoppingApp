@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import java.util.HashMap;
 import java.util.List;
 
+//todo test and error handling
+
 @RestController
 @RequestMapping("/api/")
 public class controller {
@@ -49,7 +51,7 @@ public class controller {
   @PutMapping("{id}/addProductToCart")
   public ResponseEntity addProductToCart(@PathVariable int id, @RequestBody Product product){
     ResponseEntity response = new ResponseEntity(HttpStatus.OK);
-    if(productDao.getProductById(product.getUnique_id())==null){
+    if(productDao.getProductById(product.getProduct_id())==null){
       response = new ResponseEntity(HttpStatus.UNPROCESSABLE_ENTITY);
       return response;
     }
@@ -64,7 +66,7 @@ public class controller {
   @DeleteMapping("{id}/removeProductFromCart")
   public ResponseEntity removeProductToCart(@PathVariable int id, @RequestBody Product product){
     ResponseEntity response = new ResponseEntity(HttpStatus.OK);
-    if(productDao.getProductById(product.getUnique_id())==null){
+    if(productDao.getProductById(product.getProduct_id())==null){
       response = new ResponseEntity(HttpStatus.UNPROCESSABLE_ENTITY);
       return response;
     }

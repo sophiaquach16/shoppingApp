@@ -29,7 +29,6 @@ export class CartComponent implements OnInit {
       this.counter++;
       this.quantity = this.counter;
     }
-
   }
   
   totalQuantity(){

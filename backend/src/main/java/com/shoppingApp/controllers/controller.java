@@ -26,8 +26,7 @@ public class controller {
   //get all products
   @GetMapping("allProducts")
   public List<Product> displayProducts() {
-    List<Product> products=productDao.getAllProducts();
-    return products;
+    return productDao.getAllProducts();
   }
   //get cart for user
   @GetMapping("cart")
@@ -39,7 +38,7 @@ public class controller {
   @PutMapping("{id}/addProductToCart")
   public ResponseEntity addProductToCart(@PathVariable int id, @ReqestBody Product product){
     ResponseEntity response = new ResponseEntity(HttpStatus.OK);
-    if(productDao.getProductById(product.getUnique_Id==null)){
+    if(productDao.getProductById(product.getUnique_id())==null){
       response = new ResponseEntity(HttpStatus.UNPROCESSABLE_ENTITY);
       return response;
     }
@@ -54,7 +53,7 @@ public class controller {
   @DeleteMapping("{id}/removeProductFromCart")
   public ResponseEntity removeProductToCart(@PathVariable int id, @ReqestBody Product product){
     ResponseEntity response = new ResponseEntity(HttpStatus.OK);
-    if(productDao.getProductById(product.getUnique_Id==null)){
+    if(productDao.getProductById(product.getUnique_id())==null){
       response = new ResponseEntity(HttpStatus.UNPROCESSABLE_ENTITY);
       return response;
     }

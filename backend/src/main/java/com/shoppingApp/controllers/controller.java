@@ -4,13 +4,10 @@ import com.shoppingApp.model.dao.ProductDao;
 import com.shoppingApp.model.dao.UserDao;
 import com.shoppingApp.model.dto.Product;
 import com.shoppingApp.model.dto.User;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 
@@ -22,6 +19,19 @@ public class controller {
 
   @Autowired
   UserDao userDao;
+
+
+  //for testing: return a test user
+  @GetMapping("user")
+  public User getUser() {
+    User user=new User();
+    user.setUser_id(0);
+    user.setFirst_name("John");
+    user.setLast_name("Smith");
+    user.setPassword("admin");
+    return user;
+  }
+
 
   //get all products
   @GetMapping("allProducts")
@@ -36,7 +46,7 @@ public class controller {
   }
   //add product to cart
   @PutMapping("{id}/addProductToCart")
-  public ResponseEntity addProductToCart(@PathVariable int id, @ReqestBody Product product){
+  public ResponseEntity addProductToCart(@PathVariable int id, @RequestBody Product product){
     ResponseEntity response = new ResponseEntity(HttpStatus.OK);
     if(productDao.getProductById(product.getUnique_id())==null){
       response = new ResponseEntity(HttpStatus.UNPROCESSABLE_ENTITY);
@@ -51,7 +61,7 @@ public class controller {
   }
   //delete product from cart
   @DeleteMapping("{id}/removeProductFromCart")
-  public ResponseEntity removeProductToCart(@PathVariable int id, @ReqestBody Product product){
+  public ResponseEntity removeProductToCart(@PathVariable int id, @RequestBody Product product){
     ResponseEntity response = new ResponseEntity(HttpStatus.OK);
     if(productDao.getProductById(product.getUnique_id())==null){
       response = new ResponseEntity(HttpStatus.UNPROCESSABLE_ENTITY);

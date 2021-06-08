@@ -22,13 +22,14 @@ public class controller {
 
 
   //for testing: return a test user
+  //TODO add requestbody
   @GetMapping("user")
-  public User getUser() {
+  public User createAndGetUser() {
     User user=new User();
-    user.setUser_id(0);
     user.setFirst_name("John");
     user.setLast_name("Smith");
     user.setPassword("admin");
+    user=userDao.addUser(user);
     return user;
   }
 

@@ -7,6 +7,9 @@ import { NavComponent } from './SharedComponents/nav/nav.component';
 import { HeaderComponent } from './SharedComponents/header/header.component';
 import { FooterComponent } from './SharedComponents/footer/footer.component';
 import { HomeComponent } from './Main/home/home.component';
+import { CartComponent } from './Main/cart/cart.component';
+import { CheckoutComponent } from './Main/checkout/checkout.component';
+import { ProfileUserComponent } from './Main/profile-user/profile-user.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +17,10 @@ import { HomeComponent } from './Main/home/home.component';
     NavComponent,
     HeaderComponent,
     FooterComponent,
-    HomeComponent
+    HomeComponent,
+    CartComponent,
+    CheckoutComponent,
+    ProfileUserComponent
   ],
   imports: [
     BrowserModule,

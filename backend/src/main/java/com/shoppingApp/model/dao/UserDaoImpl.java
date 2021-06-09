@@ -1,5 +1,6 @@
 package com.shoppingApp.model.dao;
 
+import com.shoppingApp.controllers.ShoppingDataValidationError;
 import com.shoppingApp.model.dto.Product;
 import com.shoppingApp.model.dto.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class UserDaoImpl implements UserDao{
   JdbcTemplate jdbc;
 
   @Override
-  public User getUserById(int user_id){
+  public User getUserById(int user_id) throws ShoppingDataValidationError {
     try {
       final String SELECT_USER_BY_ID = "SELECT * FROM User WHERE user_id = ?";
       return addCartToUser(jdbc.queryForObject(SELECT_USER_BY_ID, new UserMapper(), user_id));
@@ -30,7 +31,7 @@ public class UserDaoImpl implements UserDao{
     }
   }
   @Override
-  public List<User> getAllUsers() {
+  public List<User> getAllUsers() throws ShoppingDataValidationError {
     final String SELECT_ALL_USERS = "SELECT * FROM User";
     List<User> users= jdbc.query(SELECT_ALL_USERS, new UserMapper());
     for(User user: users){
@@ -39,7 +40,7 @@ public class UserDaoImpl implements UserDao{
     return users;
   }
   @Override
-  public User addUser(User user){
+  public User addUser(User user) throws ShoppingDataValidationError{
     final String INSERT_USER = "INSERT INTO User(password, first_name" +
       ", last_name) VALUES(?,?,?)";
     try {
@@ -51,7 +52,7 @@ public class UserDaoImpl implements UserDao{
       user.setUser_id(newId);
       addUserCart(user);
     }catch (Exception e){
-      return null;
+      throw new ShoppingDataValidationError(e.getMessage());
     }
     return user;
   }
@@ -66,7 +67,7 @@ public class UserDaoImpl implements UserDao{
 
   }
   @Override
-  public void updateUser(User user){
+  public void updateUser(User user) throws ShoppingDataValidationError {
     final String UPDATE_PRODUCT= "UPDATE User SET first_name=?, last_name=?" +
       ", password=? WHERE user_id=?";
     try {
@@ -77,11 +78,11 @@ public class UserDaoImpl implements UserDao{
         user.getUser_id());
       addUserCart(user);
     }catch (Exception e){
-      return;
+      throw new ShoppingDataValidationError(e.getMessage());
     }
   }
   @Transactional
-  public void addUserCart(User user){
+  public void addUserCart(User user) throws ShoppingDataValidationError {
     //if(user.getCart()==null) return;
     for(String product_id: user.getCart().keySet()) {
       final String INSERT_PRODUCT_IN_CART = "INSERT INTO Cart(product_id, user_id, count) VALUES(?,?,?)";
@@ -91,16 +92,18 @@ public class UserDaoImpl implements UserDao{
         final String SELECT_PRODUCT_BY_ID = "SELECT `count` FROM Cart WHERE user_id = ? AND product_id=?";
         int count = jdbc.queryForObject(SELECT_PRODUCT_BY_ID, Integer.class, user.getUser_id(), product_id);
         jdbc.update(UPDATE_PRODUCT_IN_CART, user.getCart().get(product_id), product_id, user.getUser_id());
-      } catch (Exception ex) {
+      } catch (DataAccessException ex) {
         //error if data empty, so insert instead of update
         jdbc.update(INSERT_PRODUCT_IN_CART, product_id, user.getUser_id(), user.getCart().get(product_id));
         return;
+      } catch (Exception e){
+        throw new ShoppingDataValidationError(e.getMessage());
       }
     }
   }
 
   @Transactional
-  public User addCartToUser(User user){
+  public User addCartToUser(User user) throws ShoppingDataValidationError {
     final String SELECT_ALL_PRODUCT = "SELECT * FROM Product JOIN Cart ON Product.product_id=Cart.product_id WHERE Cart.user_id=?";
     List<Product> products= jdbc.query(SELECT_ALL_PRODUCT, new ProductDaoImpl.ProductMapper(), user.getUser_id());
     final String SELECT_PRODUCT_COUNT = "SELECT `count` FROM Cart WHERE user_id = ? AND product_id=?";
@@ -110,7 +113,7 @@ public class UserDaoImpl implements UserDao{
         user.getCart().put(product.getProduct_id(), count);
       }
     }catch (Exception e){
-      return null;
+      throw new ShoppingDataValidationError(e.getMessage());
     }
     return user;
   }

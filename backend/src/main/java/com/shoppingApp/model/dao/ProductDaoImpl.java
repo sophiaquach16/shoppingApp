@@ -1,5 +1,6 @@
 package com.shoppingApp.model.dao;
 
+import com.shoppingApp.controllers.ShoppingDataValidationError;
 import com.shoppingApp.model.dto.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -34,7 +35,7 @@ public class ProductDaoImpl implements ProductDao {
     return jdbc.query(SELECT_ALL_PRODUCT, new ProductMapper());
   }
   @Override
-  public Product addProduct(Product product){
+  public Product addProduct(Product product) throws ShoppingDataValidationError {
     final String INSERT_PRODUCT = "INSERT INTO Product(product_id, product_name, brand" +
       ", product_url, product_rating, discounted_price, image, overall_rating, pid, " +
       "product_category_tree, retail_price, description) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -53,7 +54,7 @@ public class ProductDaoImpl implements ProductDao {
         product.getRetail_price(),
         product.getDescription());
     }catch (Exception e){
-      return null;
+      throw new ShoppingDataValidationError(e.getMessage());
     }
     return product;
   }
@@ -68,7 +69,7 @@ public class ProductDaoImpl implements ProductDao {
 
   }
   @Override
-  public void updateProduct(Product product){
+  public void updateProduct(Product product) throws ShoppingDataValidationError {
     final String UPDATE_PRODUCT= "UPDATE Product SET product_name=?, brand=?" +
       ", product_url=?, product_rating=?, discounted_price=?, image=?, overall_rating=?, pid=?, " +
       "product_category_tree=?, retail_price=?, description=? WHERE product_id=?";
@@ -88,11 +89,11 @@ public class ProductDaoImpl implements ProductDao {
         product.getProduct_id());
 
     }catch (Exception e){
-      return;
+      throw new ShoppingDataValidationError(e.getMessage());
     }
   }
   @Override
-  public void addProductToCart(Product product, int user_id){
+  public void addProductToCart(Product product, int user_id) throws ShoppingDataValidationError {
     final String ADD_PRODUCT_IN_CART = "UPDATE Cart SET `count`=? WHERE product_id = ? AND user_id=?";
     final String INSERT_PRODUCT_IN_CART = "INSERT INTO Cart(count, product_id, user_id) VALUES(?,?,?)";
 
@@ -101,12 +102,14 @@ public class ProductDaoImpl implements ProductDao {
       int count=jdbc.queryForObject(SELECT_PRODUCT_BY_ID, Integer.class, user_id, product.getProduct_id());
       count++;
       jdbc.update(ADD_PRODUCT_IN_CART, count, product.getProduct_id(), user_id);
-    } catch(Exception ex) {
+    } catch(DataAccessException ex) {
       jdbc.update(INSERT_PRODUCT_IN_CART, 1, product.getProduct_id(), user_id);
+    }catch (Exception e){
+      throw new ShoppingDataValidationError(e.getMessage());
     }
   }
   @Override
-  public void deleteProductFromCart(Product product, int user_id){
+  public void deleteProductFromCart(Product product, int user_id) throws ShoppingDataValidationError {
     final String DELETE_PRODUCT_IN_CART = "DELETE FROM Cart WHERE product_id = ? AND user_id=?";
     final String UPDATE_PRODUCT_IN_CART = "UPDATE Cart SET `count`=? WHERE product_id = ? AND user_id=?";
 
@@ -120,8 +123,8 @@ public class ProductDaoImpl implements ProductDao {
         count--;
         jdbc.update(UPDATE_PRODUCT_IN_CART, count, product.getProduct_id(), user_id);
       }
-    } catch(Exception ex) {
-      return;
+    } catch(Exception e) {
+      throw new ShoppingDataValidationError(e.getMessage());
     }
   }
 

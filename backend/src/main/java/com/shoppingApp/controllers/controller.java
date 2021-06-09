@@ -26,7 +26,7 @@ public class controller {
   //for testing: return a test user
   //TODO add requestbody
   @GetMapping("user")
-  public User createAndGetUser() {
+  public User createAndGetUser() throws ShoppingDataValidationError {
     User user=new User();
     user.setFirst_name("John");
     user.setLast_name("Smith");
@@ -40,15 +40,16 @@ public class controller {
   public List<Product> displayProducts() {
     return productDao.getAllProducts();
   }
+
   //get cart for user
   @GetMapping("{id}/cart")
-  public HashMap<String, Integer> getCartForUser(@PathVariable int id) {
+  public HashMap<String, Integer> getCartForUser(@PathVariable int id) throws ShoppingDataValidationError {
     User user=userDao.getUserById(id);
     return user.getCart();
   }
   //add product to cart
   @PutMapping("{id}/addProductToCart")
-  public ResponseEntity addProductToCart(@PathVariable int id, @RequestBody String product_id){
+  public ResponseEntity addProductToCart(@PathVariable int id, @RequestBody String product_id) throws ShoppingDataValidationError {
     ResponseEntity response = new ResponseEntity(HttpStatus.OK);
     if(productDao.getProductById(product_id)==null){
       response = new ResponseEntity(HttpStatus.UNPROCESSABLE_ENTITY);
@@ -64,7 +65,7 @@ public class controller {
   }
   //delete product from cart
   @DeleteMapping("{id}/removeProductFromCart")
-  public ResponseEntity removeProductToCart(@PathVariable int id, @RequestBody String product_id){
+  public ResponseEntity removeProductToCart(@PathVariable int id, @RequestBody String product_id) throws ShoppingDataValidationError {
     ResponseEntity response = new ResponseEntity(HttpStatus.OK);
     if(productDao.getProductById(product_id)==null){
       response = new ResponseEntity(HttpStatus.UNPROCESSABLE_ENTITY);

@@ -1,6 +1,7 @@
 package com.shoppingApp.model.dao;
 
 import com.shoppingApp.TestApplicationConfiguration;
+import com.shoppingApp.controllers.ShoppingDataValidationError;
 import com.shoppingApp.model.dto.Product;
 import com.shoppingApp.model.dto.User;
 import org.junit.jupiter.api.Test;
@@ -28,7 +29,7 @@ class ProductDaoImplTest {
   ProductDao productDao;
 
   @BeforeEach
-  void setUp() {
+  void setUp() throws ShoppingDataValidationError {
     List<Product> products = productDao.getAllProducts();
     for(Product product : products) {
       productDao.deleteProductById(product.getProduct_id());
@@ -40,7 +41,7 @@ class ProductDaoImplTest {
   }
 
   @Test
-  void addAndGetProductById() {
+  void addAndGetProductById() throws ShoppingDataValidationError {
     Product product=new Product();
     product.setProduct_id("testing");
     product=productDao.addProduct(product);
@@ -50,7 +51,7 @@ class ProductDaoImplTest {
   }
 
   @Test
-  void getAllProducts() {
+  void getAllProducts() throws ShoppingDataValidationError {
     Product product=new Product();
     product.setProduct_id("testing");
     product=productDao.addProduct(product);
@@ -67,7 +68,7 @@ class ProductDaoImplTest {
   }
 
   @Test
-  void deleteProductById() {
+  void deleteProductById() throws ShoppingDataValidationError {
     Product product=new Product();
     product.setProduct_id("testing");
     product=productDao.addProduct(product);
@@ -86,7 +87,7 @@ class ProductDaoImplTest {
   }
 
   @Test
-  void updateProduct() {
+  void updateProduct() throws ShoppingDataValidationError {
     Product product=new Product();
     product.setProduct_id("testing");
     product=productDao.addProduct(product);
@@ -105,7 +106,7 @@ class ProductDaoImplTest {
 
 
   @Test
-  void addAndDeleteProductToCart() {
+  void addAndDeleteProductToCart() throws ShoppingDataValidationError {
     Product product=new Product();
     product.setProduct_id("testing");
     product=productDao.addProduct(product);

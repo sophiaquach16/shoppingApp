@@ -1,6 +1,7 @@
 package com.shoppingApp.model.dao;
 
 import com.shoppingApp.TestApplicationConfiguration;
+import com.shoppingApp.controllers.ShoppingDataValidationError;
 import com.shoppingApp.model.dto.Product;
 import com.shoppingApp.model.dto.User;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,7 +25,7 @@ class UserDaoImplTest {
   ProductDao productDao;
 
   @BeforeEach
-  void setUp() {
+  void setUp() throws ShoppingDataValidationError {
     List<Product> products = productDao.getAllProducts();
     for(Product product : products) {
       productDao.deleteProductById(product.getProduct_id());
@@ -36,7 +37,7 @@ class UserDaoImplTest {
   }
 
   @Test
-  void addAndGetUserById() {
+  void addAndGetUserById() throws ShoppingDataValidationError {
     User user=new User();
     user.setFirst_name("John");
     user.setLast_name("Smith");
@@ -48,7 +49,7 @@ class UserDaoImplTest {
   }
 
   @Test
-  void getAllUsers() {
+  void getAllUsers() throws ShoppingDataValidationError {
     User user=new User();
     user.setFirst_name("John");
     user.setLast_name("Smith");
@@ -70,7 +71,7 @@ class UserDaoImplTest {
 
 
   @Test
-  void deleteUserById() {
+  void deleteUserById() throws ShoppingDataValidationError {
     Product product=new Product();
     product.setProduct_id("testing");
     product=productDao.addProduct(product);
@@ -88,7 +89,7 @@ class UserDaoImplTest {
   }
 
   @Test
-  void updateUser() {
+  void updateUser() throws ShoppingDataValidationError {
     User user=new User();
     user.setFirst_name("John");
     user.setLast_name("Smith");
@@ -106,7 +107,7 @@ class UserDaoImplTest {
     assertEquals(user.getPassword(), fromDao.getPassword());
   }
   @Test
-  void addAndGetCart() {
+  void addAndGetCart() throws ShoppingDataValidationError {
     Product product=new Product();
     product.setProduct_id("testing");
     product=productDao.addProduct(product);

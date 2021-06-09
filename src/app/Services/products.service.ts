@@ -21,12 +21,13 @@ export class ProductsService {
   }
 
   getCartForUser(userId: number){
-    let url = 'https://fakestoreapi.com/carts/user/${userId}';
+    let url = 'http://localhost:8080/api/${id}/cart';
     return this.http.get<User>(url);
   }
 
-  addProductToCart(prduct: Product, user: User){
-    this.getCartForUser(user.id);
+  addProductToCart(prduct: Product, userId: number){
+    let url = 'http://localhost:8080/api/${id}/addProductToCart';
+    // this.getCartForUser(user.id);
   }
 
 }

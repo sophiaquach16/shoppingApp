@@ -13,6 +13,7 @@ import { CartComponent } from './Main/cart/cart.component';
 import { CheckoutComponent } from './Main/checkout/checkout.component';
 import { ProfileUserComponent } from './Main/profile-user/profile-user.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -49,9 +49,13 @@ public class controller {
 
   //get cart for user
   @GetMapping("{id}/cart")
-  public HashMap<String, Integer> getCartForUser(@PathVariable int id) throws ShoppingDataValidationError {
+  public HashMap<Product, Integer> getCartForUser(@PathVariable int id) throws ShoppingDataValidationError {
     User user=userDao.getUserById(id);
-    return user.getCart();
+    HashMap<Product, Integer> output=new HashMap<>();
+    for(String product_id: user.getCart().keySet()){
+      output.put(productDao.getProductById(product_id), user.getCart().get(product_id));
+    }
+    return output;
   }
 
   //add product to cart

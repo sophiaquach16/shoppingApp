@@ -118,7 +118,7 @@ public class Product {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
     Product product = (Product) o;
-    return retail_price == product.retail_price && discounted_price == product.discounted_price && product_rating == product.product_rating && overall_rating == product.overall_rating && Objects.equals(product_id, product.product_id) && Objects.equals(product_url, product.product_url) && Objects.equals(product_name, product.product_name) && Objects.equals(product_category_tree, product.product_category_tree) && Objects.equals(pid, product.pid) && Objects.equals(image, product.image) && Objects.equals(description, product.description) && Objects.equals(brand, product.brand);
+    return retail_price == product.retail_price && discounted_price == product.discounted_price && Objects.equals(product_id, product.product_id) && Objects.equals(product_url, product.product_url) && Objects.equals(product_name, product.product_name) && Objects.equals(product_category_tree, product.product_category_tree) && Objects.equals(pid, product.pid) && Objects.equals(image, product.image) && Objects.equals(description, product.description) && Objects.equals(product_rating, product.product_rating) && Objects.equals(overall_rating, product.overall_rating) && Objects.equals(brand, product.brand);
   }
 
   @Override

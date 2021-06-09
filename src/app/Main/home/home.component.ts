@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProductsService } from 'src/app/Services/products.service';
 import { Product } from './productsMock';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { User } from './user';
 
 @Component({
   selector: 'app-home',
@@ -11,6 +12,9 @@ import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 export class HomeComponent implements OnInit {
 
   products: Product[] = [];
+  user!: User;
+
+
   closeResult='';
   id: any;
   title: any;
@@ -56,10 +60,24 @@ export class HomeComponent implements OnInit {
       backdrop: 'static',
       size: 'lg'
       });
-   this.title = product.title;
+   this.title = product.product_name;
    this.description = product.description;
-   this.price = product.price;
-   this.category = product.category;
+   this.price = product.retail_price;
+   this.category = product.product_category_tree;
+ }
+
+ addToCart(targetModal: any, product: Product){
+   this.modalService.open(targetModal, {
+    centered: true,
+    backdrop: 'static',
+    size: 'sm'
+   });
+
+   this.currService.addProductToCart(product, 1).subscribe(
+     response => {
+       console.log(response);
+     }
+   )
  }
 
 }

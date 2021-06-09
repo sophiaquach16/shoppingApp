@@ -1,12 +1,20 @@
 export interface Product {
-    id: number;
-    title: string;
-    price: number;
-    description: string;
-    category: string;
-    image: string;
+  product_id: string
+  product_url: string
+  product_name: string
+  product_category_tree: string
+  pid: string
+  retail_price: number
+  discounted_price: number
+  image: string
+  description: string
+  product_rating: string
+  overall_rating: string
+  brand: string
   }
   
+
+  // for testing only
   export const products = [
     {
       id: 1,

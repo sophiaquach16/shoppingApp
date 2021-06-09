@@ -3,14 +3,14 @@
     <div class="row text-center">
       <div class="col-lg-3 card shadow-lg  bg-light" *ngFor = 'let product of products'>
         
-        <img class="rounded float-start" [src]='product.image' alt="No Found" width="75" height="75">
-        <h5 class="text-black-50">{{product.title}}</h5>
-        <p>$ {{product.price}}</p>
+        <img class="rounded float-start" [src]='product.image' alt="Not Available" width="75" height="75">
+        <h5 class="text-black-50">{{product.product_name}}</h5>
+        <p>$ {{product.retail_price}}</p>
         <p><a class="btn btn-outline-info btn-sm" role="button" (click)="openDetails(productDetails, product)">
             <span><i class="fa fa-info"></i></span>
             <b> View details</b>
         </a></p>
-        <p><a class="btn btn-outline-secondary btn-sm" href="#" role="button">
+        <p><a class="btn btn-outline-secondary btn-sm" role="button" (click) = 'addToCart(addedItemModal, product)'>
             <span><i class="fa fa-cart-plus"></i></span>
             <b> Add to cart</b>
         </a></p>
@@ -24,7 +24,7 @@
 
 
 
-
+<!-- Modal for viewing product details -->
 <ng-template #productDetails let-modal>
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">Product Details</h4>
@@ -64,6 +64,27 @@
     </form>
   </div>
   <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('OK click')">OK</button>
+  </div>
+</ng-template>
+
+<!-- Modal for showing message of succesfully added item -->
+<ng-template #addedItemModal let-modal> 
+  <div class="modal-header"  style="background-color: lightyellow;">
+    <h4 class="modal-title" id="modal-basic-title" style="color: green;">Thank You</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" style="background-color: lightyellow;">
+    <form>
+      <div class="form-group">
+        <i class="fa fa-check" style="color: green;"></i>
+        Item successfully added to card
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer" style="background-color: lightyellow;">
     <button type="button" class="btn btn-outline-dark" (click)="modal.close('OK click')">OK</button>
   </div>
 </ng-template>

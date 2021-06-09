@@ -14,6 +14,7 @@ import java.util.List;
 //todo test and error handling
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api/")
 public class controller {
   @Autowired
@@ -38,6 +39,7 @@ public class controller {
   //get all products
   @GetMapping("allProducts")
   public List<Product> displayProducts() {
+    List<Product> products = productDao.getAllProducts();
     return productDao.getAllProducts();
   }
 

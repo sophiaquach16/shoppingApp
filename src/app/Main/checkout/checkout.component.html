@@ -1,0 +1,88 @@
+<div class="container">
+
+<div class="py-5 text-center">
+    <h2>Checkout</h2>
+    <p class="lead">Thanks for shopping at our store!</p>
+</div>
+
+
+ <form (ngSubmit)="onSubmit()" #myForm="ngForm">
+
+    <div class="form-group">
+
+        <div class="col-md-6 mb-3">
+            <label for="username">Username</label>
+            <input type="text" class="form-control" id="username" required [(ngModel)]="username" name="username">
+          </div>
+
+        <div class="col-md-6 mb-3">
+          <label for="firstName">First name</label>
+          <input type="text" class="form-control" id="firstName" required [(ngModel)]="firstname" name="firstname">
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <label for="lastName">Last name</label>
+          <input type="text" class="form-control" id="lastName" required [(ngModel)]="lastname" name="lastname">
+        </div>
+
+        <h4 class="col-md-6 mb-3">Payment</h4>
+
+        <div class="col-md-6 mb-3">
+            <div class="custom-control custom-radio">
+              <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" required name="credit">
+              <label class="custom-control-label" for="credit">Credit card</label>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label for="ccname">Name on card</label>
+            <input type="text" class="form-control" id="ccname" placeholder="" required [(ngModel)]="ccname" name="ccname">
+            <small class="text-muted">Full name as displayed on card</small>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label for="ccnumber">Credit card number</label>
+            <input type="text"  class="form-control" id="ccnumber"  
+                minlength = '16' maxlength="16" pattern="^[0-9]+" 
+                required
+                [(ngModel)] = "ccnumber" name="ccnumber">
+        </div>
+        
+        <div class="col-md-6 mb-3">
+            <label for="address">Address</label>
+            <div class="input-group">
+            <input type="text" class="form-control" id="address" placeholder="1234 Main St" required [(ngModel)]="address" name="address">
+            </div>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label for="address2">Address 2 <span class="text-muted">(Optional)</span></label>
+            <div class="input-group">
+            <input type="text" class="form-control" id="address2" placeholder="Apartment or suite" [(ngModel)]="address2" name="address2">
+            </div>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label for="address">Country</label>
+            <div class="input-group">
+            <input type="text" class="form-control" id="country" placeholder="Canada" required [(ngModel)]="country" name="country">
+            </div>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label for="address">Province</label>
+            <input type="text" class="form-control" id="province" placeholder="Quebec" required [(ngModel)]="province" name="province">
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label for="address">Zip</label>
+            <input type="text" class="form-control" id="zip" placeholder="H1A1H21" required [(ngModel)]="zip" name="zip">
+          </div>
+
+          <button class="btn btn-primary btn-lg btn-block" type="submit" [disabled]="!myForm.form.valid">Continue to checkout</button>
+
+    </div>
+      
+   </form>
+
+</div>

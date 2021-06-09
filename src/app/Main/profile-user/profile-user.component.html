@@ -1,0 +1,52 @@
+<div class="container mt-5 d-flex justify-content-center">
+    <div class="card p-3">
+        <div class="d-flex align-items-center">
+            <div class="image"> <img src="http://www.iconarchive.com/download/i78394/seanau/user/Thief.ico" class="rounded" width="155"> </div>
+            <div class="ml-3 w-100">
+                <h4 class="mb-0 mt-0"> {{ firstname }} {{ lastname }} </h4> 
+                <h4 class="mb-0 mt-0"> {{ address }} </h4> 
+                <span>Professional Shopper</span>
+                <div class="button mt-2 d-flex flex-row align-items-center"> <button class="btn btn-sm btn-outline-primary w-100" (click)="openDetails(editUserProfile)">Edit</button> </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<ng-template #editUserProfile let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">User Details</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form>
+        <div class="form-group">
+          <label for="firstname">First Name</label>
+          <div class="input-group">
+            <input id="firstname" name="firstname" class="form-control text-break" value={{firstname}} required [(ngModel)]="firstname">
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="lastname">Last Name</label>
+          <div class="input-group">
+            <input id="lastname" name="lastname" class="form-control text-break" value={{lastname}} required [(ngModel)]="lastname">
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="address">Address</label>
+          <div class="input-group">
+            <input id="address" name="address" class="form-control" value={{address}} required [(ngModel)]="address">
+          </div>
+        </div>
+  
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" type="submit" class="btn btn-outline-dark" (click)="modal.close('OK click')">Save</button>
+    </div>
+  </ng-template>
+  

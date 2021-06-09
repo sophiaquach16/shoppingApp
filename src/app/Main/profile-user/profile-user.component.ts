@@ -44,5 +44,20 @@ export class ProfileUserComponent implements OnInit {
     });
 }
 
+  getFirstName() {
+    var firstName = (document.getElementById("firstname") as HTMLSelectElement).value;
+    return firstName;
+  }
+
+  getLastName() {
+    var lastName = (document.getElementById("lastname") as HTMLSelectElement).value;
+    return lastName;
+  }
+
+  getAddress() {
+    var address = (document.getElementById("address") as HTMLSelectElement).value;
+    return address;
+  }
+
 }
 

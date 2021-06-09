@@ -34,7 +34,7 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
     WebRequest request) {
 
     Error err = new Error();
-    err.setMessage(CONSTRAINT_MESSAGE);
+    err.setMessage(ex.getMessage());
     return new ResponseEntity<>(err, HttpStatus.UNPROCESSABLE_ENTITY);
   }
 }

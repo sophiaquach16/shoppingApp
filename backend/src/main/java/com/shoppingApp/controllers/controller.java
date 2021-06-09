@@ -41,12 +41,17 @@ public class controller {
     return productDao.getAllProducts();
   }
 
+  //get product by id
+  @GetMapping("product")
+  public Product getProduct(@RequestBody String product_id){return productDao.getProductById(product_id);}
+
   //get cart for user
   @GetMapping("{id}/cart")
   public HashMap<String, Integer> getCartForUser(@PathVariable int id) throws ShoppingDataValidationError {
     User user=userDao.getUserById(id);
     return user.getCart();
   }
+
   //add product to cart
   @PutMapping("{id}/addProductToCart")
   public ResponseEntity addProductToCart(@PathVariable int id, @RequestBody String product_id) throws ShoppingDataValidationError {
@@ -63,6 +68,7 @@ public class controller {
     productDao.addProductToCart(product, id);
     return response;
   }
+
   //delete product from cart
   @DeleteMapping("{id}/removeProductFromCart")
   public ResponseEntity removeProductToCart(@PathVariable int id, @RequestBody String product_id) throws ShoppingDataValidationError {

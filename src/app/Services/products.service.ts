@@ -10,8 +10,13 @@ export class ProductsService {
 
   constructor(private http: HttpClient) {}
 
+  // getAllProducts(){
+  //   let url = 'https://fakestoreapi.com/products';
+  //   return this.http.get<any>(url);
+  // }
+
   getAllProducts(){
-    let url = 'https://fakestoreapi.com/products';
+    let url = 'http://localhost:8080/api/allProducts';
     return this.http.get<any>(url);
   }
 

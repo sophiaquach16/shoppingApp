@@ -60,10 +60,10 @@ export class HomeComponent implements OnInit {
       backdrop: 'static',
       size: 'lg'
       });
-   this.title = product.title;
+   this.title = product.product_name;
    this.description = product.description;
-   this.price = product.price;
-   this.category = product.category;
+   this.price = product.retail_price;
+   this.category = product.product_category_tree;
  }
 
  addToCart(targetModal: any, product: Product){

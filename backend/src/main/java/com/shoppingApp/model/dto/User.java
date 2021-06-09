@@ -6,17 +6,17 @@ import java.util.Objects;
 public class User {
 
 
-  HashMap<Product, Integer> cart;
+  HashMap<String, Integer> cart=new HashMap<>();
   int user_id;
   String first_name;
   String last_name;
   String password;
 
-  public HashMap<Product, Integer> getCart() {
+  public HashMap<String, Integer> getCart() {
     return cart;
   }
 
-  public void setCart(HashMap<Product, Integer> cart) {
+  public void setCart(HashMap<String, Integer> cart) {
     this.cart = cart;
   }
 

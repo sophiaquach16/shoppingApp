@@ -96,6 +96,7 @@ public class ProductDaoImpl implements ProductDao {
   @Override
   public void addProductToCart(Product product, int user_id){
     final String ADD_PRODUCT_IN_CART = "UPDATE Cart SET `count`=? WHERE product_id = ? AND user_id=?";
+    final String INSERT_PRODUCT_IN_CART = "INSERT INTO Cart(count, product_id, user_id) VALUES(?,?,?)";
 
     try {
       final String SELECT_PRODUCT_BY_ID = "SELECT `count` FROM Cart WHERE user_id = ? AND product_id=?";
@@ -103,7 +104,7 @@ public class ProductDaoImpl implements ProductDao {
       count++;
       jdbc.update(ADD_PRODUCT_IN_CART, count, product.getProduct_id(), user_id);
     } catch(Exception ex) {
-      jdbc.update(ADD_PRODUCT_IN_CART, 1, product.getProduct_id(), user_id);
+      jdbc.update(INSERT_PRODUCT_IN_CART, 1, product.getProduct_id(), user_id);
     }
   }
   @Override
@@ -115,7 +116,7 @@ public class ProductDaoImpl implements ProductDao {
       final String SELECT_PRODUCT_BY_ID = "SELECT `count` FROM Cart WHERE user_id = ? AND product_id=?";
       int count=jdbc.queryForObject(SELECT_PRODUCT_BY_ID, Integer.class, user_id, product.getProduct_id());
       if(count==1) {
-        jdbc.update(DELETE_PRODUCT_IN_CART, count, product.getProduct_id(), user_id);
+        jdbc.update(DELETE_PRODUCT_IN_CART, product.getProduct_id(), user_id);
       }
       else {
         count--;
@@ -135,12 +136,12 @@ public class ProductDaoImpl implements ProductDao {
       product.setProduct_name(rs.getString("product_name"));
       product.setBrand(rs.getString("brand"));
       product.setDescription(rs.getString("description"));
-      product.setProduct_rating(rs.getInt("product_rating"));
+      product.setProduct_rating(rs.getString("product_rating"));
       product.setProduct_id(rs.getString("product_id"));
       product.setProduct_url(rs.getString("product_url"));
       product.setDiscounted_price(rs.getInt("discounted_price"));
       product.setImage(rs.getString("image"));
-      product.setOverall_rating(rs.getInt("overall_rating"));
+      product.setOverall_rating(rs.getString("overall_rating"));
       product.setPid(rs.getString("pid"));
       product.setProduct_category_tree(rs.getString("product_category_tree"));
       product.setRetail_price(rs.getInt("retail_price"));

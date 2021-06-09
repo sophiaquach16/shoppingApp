@@ -82,17 +82,18 @@ public class UserDaoImpl implements UserDao{
   }
   @Transactional
   public void addUserCart(User user){
-    for(Product product: user.getCart().keySet()) {
+    //if(user.getCart()==null) return;
+    for(String product_id: user.getCart().keySet()) {
       final String INSERT_PRODUCT_IN_CART = "INSERT INTO Cart(product_id, user_id, count) VALUES(?,?,?)";
       final String UPDATE_PRODUCT_IN_CART = "UPDATE Cart SET `count`=? WHERE product_id = ? AND user_id=?";
 
       try {
         final String SELECT_PRODUCT_BY_ID = "SELECT `count` FROM Cart WHERE user_id = ? AND product_id=?";
-        int count = jdbc.queryForObject(SELECT_PRODUCT_BY_ID, Integer.class, user.getUser_id(), product.getProduct_id());
-        count++;
-        jdbc.update(UPDATE_PRODUCT_IN_CART, count, product.getProduct_id(), user.getUser_id());
+        int count = jdbc.queryForObject(SELECT_PRODUCT_BY_ID, Integer.class, user.getUser_id(), product_id);
+        jdbc.update(UPDATE_PRODUCT_IN_CART, user.getCart().get(product_id), product_id, user.getUser_id());
       } catch (Exception ex) {
-        jdbc.update(INSERT_PRODUCT_IN_CART, product.getProduct_id(), user.getUser_id(), 1);
+        //error if data empty, so insert instead of update
+        jdbc.update(INSERT_PRODUCT_IN_CART, product_id, user.getUser_id(), user.getCart().get(product_id));
         return;
       }
     }
@@ -106,7 +107,7 @@ public class UserDaoImpl implements UserDao{
     try {
       for (Product product : products) {
         int count = jdbc.queryForObject(SELECT_PRODUCT_COUNT, Integer.class, user.getUser_id(), product.getProduct_id());
-        user.getCart().put(product, count);
+        user.getCart().put(product.getProduct_id(), count);
       }
     }catch (Exception e){
       return null;

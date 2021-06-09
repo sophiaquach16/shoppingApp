@@ -13,8 +13,8 @@ public class Product {
   int discounted_price;
   String image;
   String description;
-  int product_rating;
-  int overall_rating;
+  String product_rating;
+  String overall_rating;
   String brand;
 
   public String getProduct_id() {
@@ -89,19 +89,19 @@ public class Product {
     this.description = description;
   }
 
-  public int getProduct_rating() {
+  public String getProduct_rating() {
     return product_rating;
   }
 
-  public void setProduct_rating(int product_rating) {
+  public void setProduct_rating(String product_rating) {
     this.product_rating = product_rating;
   }
 
-  public int getOverall_rating() {
+  public String getOverall_rating() {
     return overall_rating;
   }
 
-  public void setOverall_rating(int overall_rating) {
+  public void setOverall_rating(String overall_rating) {
     this.overall_rating = overall_rating;
   }
 

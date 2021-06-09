@@ -31,27 +31,26 @@ public class controller {
     user.setFirst_name("John");
     user.setLast_name("Smith");
     user.setPassword("admin");
+    user.getCart().put("05324708277dbf2f3e8b55a660e91988", 2);
     user=userDao.addUser(user);
     return user;
   }
-
-
   //get all products
   @GetMapping("allProducts")
   public List<Product> displayProducts() {
     return productDao.getAllProducts();
   }
   //get cart for user
-  @GetMapping("cart")
-  public HashMap<Product, Integer> getCartForUser(int id) {
+  @GetMapping("{id}/cart")
+  public HashMap<String, Integer> getCartForUser(@PathVariable int id) {
     User user=userDao.getUserById(id);
     return user.getCart();
   }
   //add product to cart
   @PutMapping("{id}/addProductToCart")
-  public ResponseEntity addProductToCart(@PathVariable int id, @RequestBody Product product){
+  public ResponseEntity addProductToCart(@PathVariable int id, @RequestBody String product_id){
     ResponseEntity response = new ResponseEntity(HttpStatus.OK);
-    if(productDao.getProductById(product.getProduct_id())==null){
+    if(productDao.getProductById(product_id)==null){
       response = new ResponseEntity(HttpStatus.UNPROCESSABLE_ENTITY);
       return response;
     }
@@ -59,14 +58,15 @@ public class controller {
       response = new ResponseEntity(HttpStatus.UNPROCESSABLE_ENTITY);
       return response;
     }
+    Product product=productDao.getProductById(product_id);
     productDao.addProductToCart(product, id);
     return response;
   }
   //delete product from cart
   @DeleteMapping("{id}/removeProductFromCart")
-  public ResponseEntity removeProductToCart(@PathVariable int id, @RequestBody Product product){
+  public ResponseEntity removeProductToCart(@PathVariable int id, @RequestBody String product_id){
     ResponseEntity response = new ResponseEntity(HttpStatus.OK);
-    if(productDao.getProductById(product.getProduct_id())==null){
+    if(productDao.getProductById(product_id)==null){
       response = new ResponseEntity(HttpStatus.UNPROCESSABLE_ENTITY);
       return response;
     }
@@ -74,7 +74,7 @@ public class controller {
       response = new ResponseEntity(HttpStatus.UNPROCESSABLE_ENTITY);
       return response;
     }
-    productDao.deleteProductFromCart(product, id);
+    productDao.deleteProductFromCart(productDao.getProductById(product_id), id);
     return response;
   }
 }

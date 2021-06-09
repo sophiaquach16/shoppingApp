@@ -52,8 +52,6 @@ public class ProductDaoImpl implements ProductDao {
         product.getProduct_category_tree(),
         product.getRetail_price(),
         product.getDescription());
-      String newId = jdbc.queryForObject("SELECT LAST_INSERT_ID()", String.class);
-      product.setProduct_id(newId);
     }catch (Exception e){
       return null;
     }

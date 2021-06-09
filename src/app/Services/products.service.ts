@@ -26,4 +26,11 @@ export class ProductsService {
     return this.http.put<any>(url, product.product_id);
   }
 
+  getCartForUser(userId: number){
+    let url = 'http://localhost:8080/api/'+userId+'/cart';
+    return this.http.get<any>(url);
+  }
+
+  
+
 }

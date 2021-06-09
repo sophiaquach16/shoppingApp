@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ProductsService } from 'src/app/Services/products.service';
 import { products } from '../home/productsMock';
 
 @Component({
@@ -9,9 +10,12 @@ import { products } from '../home/productsMock';
 export class CartComponent implements OnInit {
   products = products;
 
-  constructor() { }
+  constructor(private currService: ProductsService) {}
 
   ngOnInit(): void {
+    this.currService.getCartForUser(1).subscribe(response => {
+      console.log(response);
+    })
   }
 
   quantity: number = 1;
@@ -53,6 +57,10 @@ export class CartComponent implements OnInit {
     var e = (document.getElementById("shipping") as HTMLSelectElement).value;
     var total = parseFloat(this.getTotalPriceBeforeFees()) * 1.15 + parseFloat(e);
     return (Math.round(total * 100) / 100).toFixed(2);
+  }
+
+  getCartForUser(){
+
   }
 
 }

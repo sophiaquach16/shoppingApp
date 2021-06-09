@@ -18,7 +18,7 @@ import { HttpClient } from '@angular/common/http';
 export class CartComponent implements OnInit {
   products: Product[] = [];
   // cart: Cart[] = [];
-  cartMap = new Map<string, number>();
+  cartMap = new Map<Product, number>();
   cartPdt: Product[] = [];
   closeResult='';
   id: any;
@@ -84,9 +84,7 @@ export class CartComponent implements OnInit {
     var total = parseFloat(this.getTotalPriceBeforeFees()) + parseFloat(this.getTax()) + parseFloat(e);
     return (Math.round(total * 100) / 100).toFixed(2);
   }
-
-  getProductById(){
     
-  }
+  
 
 }

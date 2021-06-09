@@ -14,7 +14,7 @@ import java.util.List;
 //todo test and error handling
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+//@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api/")
 public class controller {
   @Autowired
@@ -54,6 +54,7 @@ public class controller {
     HashMap<Product, Integer> output=new HashMap<>();
     for(String product_id: user.getCart().keySet()){
       output.put(productDao.getProductById(product_id), user.getCart().get(product_id));
+      System.out.println(productDao.getProductById(product_id));
     }
     return output;
   }

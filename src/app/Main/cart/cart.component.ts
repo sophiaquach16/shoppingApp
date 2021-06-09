@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { products } from '../home/productsMock';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Observable } from 'rxjs';
+import { ProductsService } from 'src/app/Services/products.service';
+import { Cart, Product, products } from '../home/productsMock';
+import { forkJoin, zip, combineLatest, Subject } from 'rxjs';
+import { withLatestFrom, take, first } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-cart',
@@ -7,14 +13,38 @@ import { products } from '../home/productsMock';
   styleUrls: ['./cart.component.css']
 })
 export class CartComponent implements OnInit {
-  products = products;
+  products: Product[] = [];
+  cart: Cart[] = [];
+  closeResult='';
+  id: any;
+  title: any;
+  price: any;
+  description: any;
+  category: any;
+  image: any;
+  quantity : any;
+  selectedLevel: any;
+ 
 
-  constructor() { }
+  constructor(private cartService: ProductsService, private productService: ProductsService, private modalService: NgbModal, private http: HttpClient) { }
 
   ngOnInit(): void {
+   this.cartService.getCart().subscribe(
+      response => {
+        this.cart = response;
+        console.log(response);
+      }
+    )
+
+    this.productService.getAllProducts().subscribe(
+      response => {
+        this.products = response;
+        console.log(response);
+      }
+    )
   }
 
-  quantity: number = 1;
+  
   counter : number = 1;
 
   minus(){
@@ -37,21 +67,23 @@ export class CartComponent implements OnInit {
 
   getTotalPriceBeforeFees(){
     let total = 0;
-    products.forEach(function(product){
-      total = total + product.price;
+    this.products.forEach(function(products){
+      total = total + products.price;
     })
     return (Math.round(total * 100) / 100).toFixed(2);;
       
   }
 
   getTax(){
-    ;
     return (Math.round((parseFloat(this.getTotalPriceBeforeFees()) * 0.15) * 100) / 100).toFixed(2);
   }
 
+  
   getTotalPrice(){
-    var e = (document.getElementById("shipping") as HTMLSelectElement).value;
-    var total = parseFloat(this.getTotalPriceBeforeFees()) * 1.15 + parseFloat(e);
+    
+    var e = (document.querySelector("#shipping") as unknown as HTMLSelectElement).value;
+
+    var total = parseFloat(this.getTotalPriceBeforeFees()) + parseFloat(this.getTax()) + parseFloat(e);
     return (Math.round(total * 100) / 100).toFixed(2);
   }
 

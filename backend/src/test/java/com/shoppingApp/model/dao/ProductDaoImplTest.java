@@ -1,6 +1,7 @@
 package com.shoppingApp.model.dao;
 
 import com.shoppingApp.TestApplicationConfiguration;
+import com.shoppingApp.controllers.ShoppingDataValidationError;
 import com.shoppingApp.model.dto.Product;
 import com.shoppingApp.model.dto.User;
 import org.junit.jupiter.api.Test;
@@ -28,7 +29,7 @@ class ProductDaoImplTest {
   ProductDao productDao;
 
   @BeforeEach
-  void setUp() {
+  void setUp() throws ShoppingDataValidationError {
     List<Product> products = productDao.getAllProducts();
     for(Product product : products) {
       productDao.deleteProductById(product.getProduct_id());
@@ -40,7 +41,7 @@ class ProductDaoImplTest {
   }
 
   @Test
-  void addAndGetProductById() {
+  void addAndGetProductById() throws ShoppingDataValidationError {
     Product product=new Product();
     product.setProduct_id("testing");
     product=productDao.addProduct(product);
@@ -50,7 +51,7 @@ class ProductDaoImplTest {
   }
 
   @Test
-  void getAllProducts() {
+  void getAllProducts() throws ShoppingDataValidationError {
     Product product=new Product();
     product.setProduct_id("testing");
     product=productDao.addProduct(product);
@@ -67,17 +68,26 @@ class ProductDaoImplTest {
   }
 
   @Test
-  void deleteProductById() {
+  void deleteProductById() throws ShoppingDataValidationError {
     Product product=new Product();
     product.setProduct_id("testing");
     product=productDao.addProduct(product);
+
+    User user=new User();
+    user.setFirst_name("John");
+    user.setLast_name("Smith");
+    user.setPassword("admin");
+    user.getCart().put("testing", 3);
+    user=userDao.addUser(user);
+
+
     productDao.deleteProductById(product.getProduct_id());
     List<Product> products=productDao.getAllProducts();
     assertEquals(0, products.size());
   }
 
   @Test
-  void updateProduct() {
+  void updateProduct() throws ShoppingDataValidationError {
     Product product=new Product();
     product.setProduct_id("testing");
     product=productDao.addProduct(product);
@@ -96,7 +106,7 @@ class ProductDaoImplTest {
 
 
   @Test
-  void addAndDeleteProductToCart() {
+  void addAndDeleteProductToCart() throws ShoppingDataValidationError {
     Product product=new Product();
     product.setProduct_id("testing");
     product=productDao.addProduct(product);
@@ -106,8 +116,23 @@ class ProductDaoImplTest {
     user.setLast_name("Smith");
     user.setPassword("admin");
     user=userDao.addUser(user);
+
+    productDao.addProductToCart(product, user.getUser_id());
+
+    User fromDaoUser=userDao.getUserById(user.getUser_id());
+    assertTrue(fromDaoUser.getCart().containsKey(product.getProduct_id()));
+    assertEquals(1, fromDaoUser.getCart().get(product.getProduct_id()));
+
+    productDao.addProductToCart(product, user.getUser_id());
+    fromDaoUser=userDao.getUserById(user.getUser_id());
+    assertEquals(2, fromDaoUser.getCart().get(product.getProduct_id()));
+
+    productDao.deleteProductFromCart(product, user.getUser_id());
+    fromDaoUser=userDao.getUserById(user.getUser_id());
+    assertEquals(1, fromDaoUser.getCart().get(product.getProduct_id()));
+
+    productDao.deleteProductFromCart(product, user.getUser_id());
+    fromDaoUser=userDao.getUserById(user.getUser_id());
+    assertEquals(0, fromDaoUser.getCart().size());
   }
-
-
-
 }

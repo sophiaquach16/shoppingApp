@@ -12,17 +12,18 @@
             </div>
 
             <div *ngFor="let eachProduct of products">
-                <div class="row border-top border-bottom">
-                    <div class="row main align-items-center">
-                        <div class="col-2"><img class="img-fluid" src="eachProduct.imgUrl"></div>
-                        <div class="col">
-                            <div class="row text-muted">Shirt</div>
-                            <div class="row">{{eachProduct.name}}</div>
+                <!-- <div *ngIf="eachProduct.quantity > 0"> -->
+                    <div class="row border-top border-bottom">
+                        <div class="row main align-items-center">
+                            <div class="col-2"><img class="img-fluid" [src]='eachProduct.image'></div>
+                            <div class="col">
+                                <div class="row">{{eachProduct.product_name}}</div>
+                            </div>
+                            <div class="col"> <input class = "quantity" [id] = "'quantityItem' + eachProduct.product_id" type = "number" min = "1" max = "99" value = "1" /></div>
+                            <div class="col">&euro; {{eachProduct.retail_price}} <span class="close">&#10005; 1</span></div>
                         </div>
-                        <div class="col"> <a (click) = "minus()">-</a><a href="" class="border">{{eachProduct.quantity}}</a><a (click) = "plus()">+</a> </div>
-                        <div class="col">&euro; {{eachProduct.price}} <span class="close">&#10005; 1</span></div>
                     </div>
-                </div>
+                <!-- </div> -->
             </div>
 
 
@@ -43,17 +44,23 @@
             </div>
             <form>
                 <p>SHIPPING</p> <select>
-                    <option class="text-muted" id = "shipping" value = '5'>Standard-Delivery- &euro;5.00</option>
-                    <option class="text-muted" id = "shipping" value = '7'>Premiuum-Delivery- &euro;7.00</option>
-                </select>
+                    <option class="text-muted" id = "shipping" [value] = '5'>Standard-Delivery- &euro;5.00</option>
+                    </select>
                 <p>GIVE CODE</p> <input id="code" placeholder="Enter your code">
+                <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
+                    <div class="col">TOTAL PRICE</div>
+                    <div class="col text-right">&euro; <span [innerHTML] = "getTotalPrice()"> $0</span> </div>
+                </div> <a href = "/checkout"><button class="btn">CHECKOUT</button></a>
             </form>
-            <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
-                <div class="col">TOTAL PRICE</div>
-                <div class="col text-right">&euro; <span [innerHTML] = "getTotalPrice()"> isnert price here</span> </div>
-            </div> <a href = "/checkout"><button class="btn">CHECKOUT</button></a>
+            
         </div>
     </div>
 </div> 
 
 </div>
+
+<!-- <div *ngFor = "let individualCart of cart">
+    <h1>{{individualCart.id}}</h1>
+    <p *ngFor = "let product of individualCart.products">{{product.productId}}
+    </p>    
+</div> -->

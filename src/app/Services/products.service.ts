@@ -31,6 +31,9 @@ export class ProductsService {
     return this.http.get<any>(url);
   }
 
-  
+  getProductById(productId: string){
+    let url = 'http://localhost:8080/api/'+productId+'product';
+    return this.http.get<any>(url);
+  }
 
 }

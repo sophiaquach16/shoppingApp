@@ -20,14 +20,10 @@ export class ProductsService {
     return this.http.get<any>(url);
   }
 
-  getCartForUser(userId: number){
-    let url = 'http://localhost:8080/api/${id}/cart';
-    return this.http.get<User>(url);
-  }
-
-  addProductToCart(prduct: Product, userId: number){
-    let url = 'http://localhost:8080/api/${id}/addProductToCart';
+  addProductToCart(product: Product, userId: number){
+    let url = 'http://localhost:8080/api/'+userId+'/addProductToCart';
     // this.getCartForUser(user.id);
+    return this.http.put<any>(url, product.product_id);
   }
 
 }

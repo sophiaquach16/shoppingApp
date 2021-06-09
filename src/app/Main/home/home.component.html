@@ -3,7 +3,7 @@
     <div class="row text-center">
       <div class="col-lg-3 card shadow-lg  bg-light" *ngFor = 'let product of products'>
         
-        <img class="rounded float-start" [src]='product.image' alt="No Found" width="75" height="75">
+        <img class="rounded float-start" [src]='product.image' alt="Not Available" width="75" height="75">
         <h5 class="text-black-50">{{product.product_name}}</h5>
         <p>$ {{product.retail_price}}</p>
         <p><a class="btn btn-outline-info btn-sm" role="button" (click)="openDetails(productDetails, product)">

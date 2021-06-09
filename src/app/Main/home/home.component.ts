@@ -73,8 +73,11 @@ export class HomeComponent implements OnInit {
     size: 'sm'
    });
 
-   this.currService.addProductToCart(product, this.user)
-   this.currService.getCartForUser(1);
+   this.currService.addProductToCart(product, 1).subscribe(
+     response => {
+       console.log(response);
+     }
+   )
  }
 
 }

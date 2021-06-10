@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { NgForm } from '@angular/forms';
 import { Product, products } from '../home/productsMock';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -16,6 +16,7 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./cart.component.css']
 })
 export class CartComponent implements OnInit {
+  code = "";
   products: Product[] = [];
   // cart: Cart[] = [];
   cartMap = new Map<Product, number>();
@@ -41,26 +42,9 @@ export class CartComponent implements OnInit {
       }
     )
   }
-
-  
-  counter : number = 1;
-
-  minus(){
-    if(this.counter != 1){
-      this.counter--;
-      this.quantity = this.counter;
-    }
-  }
-
-  plus(){
-    if(this.counter != 99){
-      this.counter++;
-      this.quantity = this.counter;
-    }
-  }
   
   totalQuantity(){
-    return 10;
+    return 10; //Need to fix this method
   }
 
   getTotalPriceBeforeFees(){
@@ -78,10 +62,15 @@ export class CartComponent implements OnInit {
 
   
   getTotalPrice(){
-    
-    var e = (document.querySelector("#shipping") as unknown as HTMLSelectElement).value;
+    var shippingCost = (document.querySelector("#shipping") as unknown as HTMLSelectElement).value;
+    var total = parseFloat(this.getTotalPriceBeforeFees()) + parseFloat(this.getTax()) + parseFloat(shippingCost);
+    return (Math.round(total * 100) / 100).toFixed(2);
+  }
 
-    var total = parseFloat(this.getTotalPriceBeforeFees()) + parseFloat(this.getTax()) + parseFloat(e);
+  getTotalPriceWithDiscount(){
+    var shippingCost = (document.querySelector("#shipping") as unknown as HTMLSelectElement).value;
+    var total = parseFloat(this.getTotalPriceBeforeFees()) + parseFloat(this.getTax()) + parseFloat(shippingCost);
+    total = total * 0.90;
     return (Math.round(total * 100) / 100).toFixed(2);
   }
     

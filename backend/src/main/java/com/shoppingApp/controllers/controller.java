@@ -57,6 +57,13 @@ public class controller {
     }
     return output;
   }
+  //get cart for user
+  @GetMapping("{id}/cartstring")
+  public HashMap<String, Integer> getCartForUserPid(@PathVariable int id) throws ShoppingDataValidationError {
+    User user=userDao.getUserById(id);
+    return user.getCart();
+  }
+
 
   //add product to cart
   @PutMapping("{id}/addProductToCart")

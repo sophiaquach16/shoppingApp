@@ -27,12 +27,22 @@ export class ProductsService {
   }
 
   getCartForUser(userId: number){
-    let url = 'http://localhost:4200/api/'+userId+'/cart';
+    let url = 'http://localhost:4200/api/'+userId+'/cartstring';
+  //   let options = {
+  //     params: {
+  //     action: 'query',
+  //     format: 'json',
+  //     list: 'search',
+  //     utf8: '1',
+  //     origin: '*'
+  //   }
+  // }
     return this.http.get<any>(url);
   }
 
   getProductById(productId: string){
-    let url = 'http://localhost:4200/api/'+productId+'product';
+    let url = 'http://localhost:4200/api/'+productId+'/product';
+    console.log(url);
     return this.http.get<any>(url);
   }
 

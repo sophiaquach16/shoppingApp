@@ -45,7 +45,9 @@ public class controller {
 
   //get product by id
   @GetMapping("{product_id}/product")
-  public Product getProduct(@PathVariable String product_id){return productDao.getProductById(product_id);}
+  public Product getProduct(@PathVariable String product_id){
+    return productDao.getProductById(product_id);
+  }
 
   //get cart for user
   @GetMapping("{id}/cart")
@@ -58,6 +60,13 @@ public class controller {
     }
     return output;
   }
+  //get cart for user
+  @GetMapping("{id}/cartstring")
+  public HashMap<String, Integer> getCartForUserPid(@PathVariable int id) throws ShoppingDataValidationError {
+    User user=userDao.getUserById(id);
+    return user.getCart();
+  }
+
 
   //add product to cart
   @PutMapping("{id}/addProductToCart")

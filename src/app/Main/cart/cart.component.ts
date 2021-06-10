@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Product, products } from '../home/productsMock';
+import { Product } from '../home/productsMock';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
@@ -17,9 +17,9 @@ import { HttpClient } from '@angular/common/http';
 })
 export class CartComponent implements OnInit {
   products: Product[] = [];
-  // cart: Cart[] = [];
-  cartMap = new Map<Product, number>();
-  cartPdt: Product[] = [];
+  keys: Product[] =[];
+  cartMap=new Map();
+  // cartPdt: Product[] = [];
   closeResult='';
   id: any;
   title: any;
@@ -29,17 +29,41 @@ export class CartComponent implements OnInit {
   image: any;
   quantity : any;
   selectedLevel: any;
+  total: number = 0;
  
 
   constructor(private cartService: ProductsService, private productService: ProductsService, private modalService: NgbModal, private http: HttpClient) { }
 
-  ngOnInit(): void {
-   this.cartService.getCartForUser(1).subscribe(
-      response => {
-        this.cartMap = response;
-        console.log(this.cartMap);
-      }
-    )
+  // ngOnInit(): void {
+  //  this.cartService.getCartForUser(1).subscribe(
+  //     response => {
+  //       this.cartMap = response;
+  //       // this.keys = Array.from( this.cartMap.keys()) ;
+  //       console.log(this.cartMap);
+  //       // const pdts = Object.keys(this.cartMap);
+  //       // console.log(pdts);
+  //       // for (const key of pdts.keys()) {
+  //       //   console.log(key);        
+  //       // }
+        
+  //     }
+  //   )
+  // }
+
+  ngOnInit(): void{
+    this.productService.getCartForUser(1).subscribe((cartMap: any) => {
+      // console.log(cartMap);
+      this.keys = Object.keys(cartMap) as unknown as Product[];
+    
+
+      // console.log(this.keys[1].brand);
+      //  Object.keys(cartMap).forEach(key => {
+      //   var pdts = cartMap[key];
+      //   console.log(pdts);
+      // });
+      // console.log('array is ' + this._postsArray.toString());
+    
+       });
   }
 
   
@@ -64,11 +88,12 @@ export class CartComponent implements OnInit {
   }
 
   getTotalPriceBeforeFees(){
-    let total = 0;
-    this.products.forEach(function(products){
-      total = total + products.retail_price;
-    })
-    return (Math.round(total * 100) / 100).toFixed(2);;
+
+    // this.products.forEach(function(products){
+    //   total = total + products.retail_price;
+    // })
+    // return (Math.round(total * 100) / 100).toFixed(2);
+    return (Math.round(this.total * 100) / 100).toFixed(2);
       
   }
 

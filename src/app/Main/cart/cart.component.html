@@ -11,16 +11,18 @@
                 </div>
             </div>
 
-            <div *ngFor="let eachProduct of products">
+            <!-- <div *ngFor="let eachProduct of products"> -->
+                <div *ngFor="let eachProduct of cartMap | keyvalue">
                 <!-- <div *ngIf="eachProduct.quantity > 0"> -->
                     <div class="row border-top border-bottom">
                         <div class="row main align-items-center">
-                            <div class="col-2"><img class="img-fluid" [src]='eachProduct.image'></div>
+                            <div class="col-2"><img class="img-fluid" [src]='eachProduct.key.image'></div>
                             <div class="col">
-                                <div class="row">{{eachProduct.product_name}}</div>
+                                <div class="row">{{eachProduct.key.product_name}}</div>
                             </div>
-                            <div class="col"> <input class = "quantity" [id] = "'quantityItem' + eachProduct.product_id" type = "number" min = "1" max = "99" value = "1" /></div>
-                            <div class="col">&euro; {{eachProduct.retail_price}} <span class="close">&#10005; 1</span></div>
+                            <div class="col"> <input readonly class = "quantity" [id] = "'quantityItem' + eachProduct.key.product_id" type = "number" min = "1" max = "99" value={{eachProduct.value}}/>
+                                </div>
+                            <div class="col">&euro; {{eachProduct.key.retail_price}} <span class="close">&#10005; {{eachProduct.value}}</span></div>
                         </div>
                     </div>
                 <!-- </div> -->

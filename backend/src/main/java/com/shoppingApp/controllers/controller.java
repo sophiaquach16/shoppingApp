@@ -54,6 +54,7 @@ public class controller {
     HashMap<Product, Integer> output=new HashMap<>();
     for(String product_id: user.getCart().keySet()){
       output.put(productDao.getProductById(product_id), user.getCart().get(product_id));
+      System.out.println(productDao.getProductById(product_id));
     }
     return output;
   }

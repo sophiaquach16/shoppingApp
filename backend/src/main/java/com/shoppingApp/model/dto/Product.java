@@ -125,4 +125,22 @@ public class Product {
   public int hashCode() {
     return Objects.hash(product_id, product_url, product_name, product_category_tree, pid, retail_price, discounted_price, image, description, product_rating, overall_rating, brand);
   }
+
+  @Override
+  public String toString() {
+    return "Product{" +
+      "product_id='" + product_id + '\'' +
+      ", product_url='" + product_url + '\'' +
+      ", product_name='" + product_name + '\'' +
+      ", product_category_tree='" + product_category_tree + '\'' +
+      ", pid='" + pid + '\'' +
+      ", retail_price=" + retail_price +
+      ", discounted_price=" + discounted_price +
+      ", image='" + image + '\'' +
+      ", description='" + description + '\'' +
+      ", product_rating='" + product_rating + '\'' +
+      ", overall_rating='" + overall_rating + '\'' +
+      ", brand='" + brand + '\'' +
+      '}';
+  }
 }

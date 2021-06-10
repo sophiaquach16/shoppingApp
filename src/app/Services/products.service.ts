@@ -16,23 +16,23 @@ export class ProductsService {
   // }
 
   getAllProducts(){
-    let url = 'http://localhost:8080/api/allProducts';
+    let url = 'http://localhost:4200/api/allProducts';
     return this.http.get<any>(url);
   }
 
   addProductToCart(product: Product, userId: number){
-    let url = 'http://localhost:8080/api/'+userId+'/addProductToCart';
+    let url = 'http://localhost:4200/api/'+userId+'/addProductToCart';
     // this.getCartForUser(user.id);
     return this.http.put<any>(url, product.product_id);
   }
 
   getCartForUser(userId: number){
-    let url = 'http://localhost:8080/api/'+userId+'/cart';
+    let url = 'http://localhost:4200/api/'+userId+'/cart';
     return this.http.get<any>(url);
   }
 
   getProductById(productId: string){
-    let url = 'http://localhost:8080/api/'+productId+'product';
+    let url = 'http://localhost:4200/api/'+productId+'product';
     return this.http.get<any>(url);
   }
 

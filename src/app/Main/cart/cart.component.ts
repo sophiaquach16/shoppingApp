@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Product, products } from '../home/productsMock';
+
+import { Product } from '../home/productsMock';
+
+
+import { NgForm } from '@angular/forms';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
@@ -16,9 +20,10 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./cart.component.css']
 })
 export class CartComponent implements OnInit {
+  code = "";
   products: Product[] = [];
-  // cart: Cart[] = [];
-  cartMap = new Map<string, number>();
+  keys: Product[] =[];
+  cartMap=new Map();
   cartPdt: Product[] = [];
   closeResult='';
   id: any;
@@ -29,46 +34,56 @@ export class CartComponent implements OnInit {
   image: any;
   quantity : any;
   selectedLevel: any;
+  total: number = 0;
  
 
   constructor(private cartService: ProductsService, private productService: ProductsService, private modalService: NgbModal, private http: HttpClient) { }
 
-  ngOnInit(): void {
-   this.cartService.getCartForUser(1).subscribe(
-      response => {
-        this.cartMap = response;
-        console.log(this.cartMap);
-      }
-    )
-  }
+  // ngOnInit(): void {
+  //  this.cartService.getCartForUser(1).subscribe(
+  //     response => {
+  //       this.cartMap = response;
+  //       // this.keys = Array.from( this.cartMap.keys()) ;
+  //       console.log(this.cartMap);
+  //       // const pdts = Object.keys(this.cartMap);
+  //       // console.log(pdts);
+  //       // for (const key of pdts.keys()) {
+  //       //   console.log(key);        
+  //       // }
+        
+  //     }
+  //   )
+  // }
 
-  
-  counter : number = 1;
+  ngOnInit(): void{
+    this.productService.getCartForUser(1).subscribe(response => {
+      this.cartMap = response;
+      // console.log(cartMap);
+      this.keys = Object.keys(this.cartMap) as unknown as Product[];
+      let currPdt = this.keys[0];
+      // console.log(this.cartMap.entries().next().value);
 
-  minus(){
-    if(this.counter != 1){
-      this.counter--;
-      this.quantity = this.counter;
-    }
-  }
-
-  plus(){
-    if(this.counter != 99){
-      this.counter++;
-      this.quantity = this.counter;
-    }
+      console.log(this.keys[0]['product_id']);
+      //  Object.keys(cartMap).forEach(key => {
+      //   var pdts = cartMap[key];
+      //   console.log(pdts);
+      // });
+      // console.log('array is ' + this._postsArray.toString());
+    
+       });
   }
   
   totalQuantity(){
-    return 10;
+    return 10; //Need to fix this method
   }
 
   getTotalPriceBeforeFees(){
-    let total = 0;
-    this.products.forEach(function(products){
-      total = total + products.retail_price;
-    })
-    return (Math.round(total * 100) / 100).toFixed(2);;
+
+    // this.products.forEach(function(products){
+    //   total = total + products.retail_price;
+    // })
+    // return (Math.round(total * 100) / 100).toFixed(2);
+    return (Math.round(this.total * 100) / 100).toFixed(2);
       
   }
 
@@ -78,15 +93,18 @@ export class CartComponent implements OnInit {
 
   
   getTotalPrice(){
-    
-    var e = (document.querySelector("#shipping") as unknown as HTMLSelectElement).value;
-
-    var total = parseFloat(this.getTotalPriceBeforeFees()) + parseFloat(this.getTax()) + parseFloat(e);
+    var shippingCost = (document.querySelector("#shipping") as unknown as HTMLSelectElement).value;
+    var total = parseFloat(this.getTotalPriceBeforeFees()) + parseFloat(this.getTax()) + parseFloat(shippingCost);
     return (Math.round(total * 100) / 100).toFixed(2);
   }
 
-  getProductById(){
-    
+  getTotalPriceWithDiscount(){
+    var shippingCost = (document.querySelector("#shipping") as unknown as HTMLSelectElement).value;
+    var total = parseFloat(this.getTotalPriceBeforeFees()) + parseFloat(this.getTax()) + parseFloat(shippingCost);
+    total = total * 0.90;
+    return (Math.round(total * 100) / 100).toFixed(2);
   }
+    
+  
 
 }

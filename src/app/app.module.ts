@@ -14,6 +14,7 @@ import { CheckoutComponent } from './Main/checkout/checkout.component';
 import { ProfileUserComponent } from './Main/profile-user/profile-user.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ConvertPipe } from './convert.pipe';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     HomeComponent,
     CartComponent,
     CheckoutComponent,
-    ProfileUserComponent
+    ProfileUserComponent,
+    ConvertPipe
   ],
   imports: [
     BrowserModule,

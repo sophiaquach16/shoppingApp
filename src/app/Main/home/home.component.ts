@@ -62,7 +62,7 @@ export class HomeComponent implements OnInit {
       });
    this.title = product.product_name;
    this.description = product.description;
-   this.price = product.retail_price;
+   this.price = '$' + product.retail_price;
    this.category = product.product_category_tree;
  }
 

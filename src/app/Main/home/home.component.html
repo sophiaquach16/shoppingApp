@@ -4,8 +4,8 @@
       <div class="col-lg-3 card shadow-lg  bg-light" *ngFor = 'let product of products'>
         
         <img class="rounded float-start" [src]='product.image' alt="Not Available" width="75" height="75">
-        <h5 class="text-black-50">{{product.product_name}}</h5>
-        <p>$ {{product.retail_price}}</p>
+        <h5 class="text-black-50">{{(product.product_name.length > 15)? (product.product_name | slice: 0 : 15) + '...':(product.product_name)}} </h5>
+        <p>{{product.retail_price | currency: 'CAD': 'symbol'}}</p>
         <p><a class="btn btn-outline-info btn-sm" role="button" (click)="openDetails(productDetails, product)">
             <span><i class="fa fa-info"></i></span>
             <b> View details</b>
@@ -44,7 +44,7 @@
       <div class="form-group">
         <label for="description">Description</label>
         <div class="input-group">
-          <input readonly id="description" name="description" class="form-control text-break" value={{description}}>
+          <textarea readonly rows="4" cols="50" id="description" name="description" class="form-control text-break" value={{description}}></textarea>
         </div>
       </div>
 

@@ -36,7 +36,7 @@ export class CartComponent implements OnInit {
   image: any;
   // quantity : any;
   selectedLevel: any;
-  total: number = 0;
+  total: any = 0;
   currProduct!: Product;
   countPdt: number[] = [];
   i:number = 0;
@@ -123,18 +123,13 @@ export class CartComponent implements OnInit {
      
   }
   
-  totalQuantity(){
-    return 10; //Need to fix this method
-  }
 
   getTotalPriceBeforeFees(){
-
-    // this.products.forEach(function(products){
-    //   total = total + products.retail_price;
-    // })
-    // return (Math.round(total * 100) / 100).toFixed(2);
+    this.total = 0;
+    this.items.forEach((item) =>{
+      this.total = (this.total) + (item.product.retail_price * item.quantity);
+    })
     return (Math.round(this.total * 100) / 100).toFixed(2);
-      
   }
 
   getTax(){

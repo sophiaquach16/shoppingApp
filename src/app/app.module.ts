@@ -15,6 +15,7 @@ import { ProfileUserComponent } from './Main/profile-user/profile-user.component
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ConvertPipe } from './convert.pipe';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { ConvertPipe } from './convert.pipe';
     ReactiveFormsModule,
     HttpClientModule,
     NgbModule,
+    CommonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

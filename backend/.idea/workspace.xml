@@ -5,13 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ff748ff6-efd1-40b1-a05d-743df0be6235" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/shoppingApp/controllers/controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/shoppingApp/controllers/controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/shoppingApp/model/dto/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/shoppingApp/model/dto/Product.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/shoppingApp/model/dto/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/shoppingApp/model/dto/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/shoppingApp/controllers/controller.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/shoppingApp/controllers/controller.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/shoppingApp/model/dto/Product.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/shoppingApp/model/dto/Product.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../src/app/Main/cart/cart.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../src/app/Main/cart/cart.component.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../src/app/Main/cart/cart.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../src/app/Main/cart/cart.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/app/Main/home/productsMock.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../src/app/Main/home/productsMock.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../src/app/Services/products.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../src/app/Services/products.service.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

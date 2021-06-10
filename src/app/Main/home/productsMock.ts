@@ -1,3 +1,5 @@
+import { ProductsService } from "src/app/Services/products.service";
+
 export interface Product {
   product_id: string
   product_url: string
@@ -12,6 +14,11 @@ export interface Product {
   overall_rating: string
   brand: string
   }
+
+  export interface Item {
+    product: Product
+    quantity: number
+    }
   
 
   // for testing only

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 
-import { Product } from '../home/productsMock';
+import { Item, Product } from '../home/productsMock';
 
 
 import { NgForm } from '@angular/forms';
@@ -12,6 +12,7 @@ import { ProductsService } from 'src/app/Services/products.service';
 import { forkJoin, zip, combineLatest, Subject } from 'rxjs';
 import { withLatestFrom, take, first } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
+import { stringify } from '@angular/compiler/src/util';
 
 
 @Component({
@@ -22,8 +23,9 @@ import { HttpClient } from '@angular/common/http';
 export class CartComponent implements OnInit {
   code = "";
   products: Product[] = [];
-  keys: Product[] =[];
-  cartMap=new Map();
+  keys: string[] =[];
+  resultMap: Map<string, Number>=new Map();
+  cartMap: Map<Product, Number>=new Map();
   cartPdt: Product[] = [];
   closeResult='';
   id: any;
@@ -32,9 +34,13 @@ export class CartComponent implements OnInit {
   description: any;
   category: any;
   image: any;
-  quantity : any;
+  // quantity : any;
   selectedLevel: any;
   total: number = 0;
+  currProduct!: Product;
+  countPdt: number[] = [];
+  i:number = 0;
+  items: Item[] = [];
  
 
   constructor(private cartService: ProductsService, private productService: ProductsService, private modalService: NgbModal, private http: HttpClient) { }
@@ -57,20 +63,64 @@ export class CartComponent implements OnInit {
 
   ngOnInit(): void{
     this.productService.getCartForUser(1).subscribe(response => {
-      this.cartMap = response;
-      // console.log(cartMap);
-      this.keys = Object.keys(this.cartMap) as unknown as Product[];
-      let currPdt = this.keys[0];
-      // console.log(this.cartMap.entries().next().value);
+      this.resultMap = response;
+      // console.log(this.resultMap);
+      // console.log(this.resultMap.get('1'));
+      // this.keys = Object.keys(this.resultMap); //array of products id as string
+      // console.log(this.keys[0]); //test the first product id
+      // this.keys = Array.from(Object.keys(this.resultMap));
+      // this.countPdt = Object.values(this.resultMap); //array od pdt counts
+      // console.log(response[this.keys[0]]);
+      // console.log(this.countPdt);
 
-      console.log(this.keys[0]['product_id']);
-      //  Object.keys(cartMap).forEach(key => {
-      //   var pdts = cartMap[key];
-      //   console.log(pdts);
-      // });
-      // console.log('array is ' + this._postsArray.toString());
-    
-       });
+      // for(let i=0; i<this.resultMap.size -1; i++){
+      //   this.productService.getProductById(this.keys[i]).subscribe(response => {
+      //             this.currProduct = response;
+      //             // this.cartPdt.push(this.currProduct);
+      //             // console.log(this.cartPdt);
+      //             let currItem: Item
+      //           });
+      // }
+
+      // for(let id of keys){
+      //   this.productService.getProductById(id).subscribe(response => {
+      //         this.currProduct = response;
+      //         this.cartPdt.push(this.currProduct);
+      //         console.log(this.cartPdt);
+
+
+            // });
+          
+      // }
+
+      Object.keys(this.resultMap).forEach((key: string) => {
+        // console.log(this.resultMap.get(key));
+        console.log("key "+key);
+        console.log("value" + response[key]);
+
+        // this.countPdt = Object.values(this.resultMap);
+        // console.log(typeof(this.countPdt));
+        // console.log("value: "+this.countPdt[0]);
+        let quantity = response[key];
+        console.log(quantity);
+        this.productService.getProductById(key).subscribe(response1 => {
+          this.currProduct = response1;
+         
+          let item: Item = {
+            product: this.currProduct,
+            quantity: quantity
+          };
+          console.log(quantity);
+          this.items.push(item);
+          // this.cartPdt.push(this.currProduct);
+          console.log(this.items);
+        });
+      
+      });
+      console.log(this.items);
+  
+    });
+     
   }
   
   totalQuantity(){

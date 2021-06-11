@@ -86,8 +86,8 @@ public class controller {
   }
 
   //delete product from cart
-  @DeleteMapping("{id}/removeProductFromCart")
-  public ResponseEntity removeProductToCart(@PathVariable int id, @RequestBody String product_id) throws ShoppingDataValidationError {
+  @DeleteMapping("{id}/{product_id}/removeProductFromCart")
+  public ResponseEntity removeProductToCart(@PathVariable int id, @PathVariable String product_id) throws ShoppingDataValidationError {
     ResponseEntity response = new ResponseEntity(HttpStatus.OK);
     if(productDao.getProductById(product_id)==null){
       response = new ResponseEntity(HttpStatus.UNPROCESSABLE_ENTITY);

@@ -13,6 +13,7 @@ import { forkJoin, zip, combineLatest, Subject } from 'rxjs';
 import { withLatestFrom, take, first } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { stringify } from '@angular/compiler/src/util';
+import { RouterLink } from '@angular/router';
 
 
 @Component({
@@ -43,23 +44,7 @@ export class CartComponent implements OnInit {
   items: Item[] = [];
  
 
-  constructor(private cartService: ProductsService, private productService: ProductsService, private modalService: NgbModal, private http: HttpClient) { }
-
-  // ngOnInit(): void {
-  //  this.cartService.getCartForUser(1).subscribe(
-  //     response => {
-  //       this.cartMap = response;
-  //       // this.keys = Array.from( this.cartMap.keys()) ;
-  //       console.log(this.cartMap);
-  //       // const pdts = Object.keys(this.cartMap);
-  //       // console.log(pdts);
-  //       // for (const key of pdts.keys()) {
-  //       //   console.log(key);        
-  //       // }
-        
-  //     }
-  //   )
-  // }
+  constructor(private productService: ProductsService, private modalService: NgbModal, private http: HttpClient) { }
 
   ngOnInit(): void{
     this.productService.getCartForUser(1).subscribe(response => {
@@ -93,33 +78,35 @@ export class CartComponent implements OnInit {
           
       // }
 
-      Object.keys(this.resultMap).forEach((key: string) => {
-        // console.log(this.resultMap.get(key));
-        console.log("key "+key);
-        console.log("value" + response[key]);
+      if(this.resultMap.size !=  0){
+          Object.keys(this.resultMap).forEach((key: string) => {
+            // console.log(this.resultMap.get(key));
+            console.log("key "+key);
+            console.log("value" + response[key]);
 
-        // this.countPdt = Object.values(this.resultMap);
-        // console.log(typeof(this.countPdt));
-        // console.log("value: "+this.countPdt[0]);
-        let quantity = response[key];
-        console.log(quantity);
-        this.productService.getProductById(key).subscribe(response1 => {
-          this.currProduct = response1;
-         
-          let item: Item = {
-            product: this.currProduct,
-            quantity: quantity
-          };
-          console.log(quantity);
-          this.items.push(item);
-          // this.cartPdt.push(this.currProduct);
+            // this.countPdt = Object.values(this.resultMap);
+            // console.log(typeof(this.countPdt));
+            // console.log("value: "+this.countPdt[0]);
+            let quantity = response[key];
+            console.log(quantity);
+            this.productService.getProductById(key).subscribe(response1 => {
+              this.currProduct = response1;
+            
+              let item: Item = {
+                product: this.currProduct,
+                quantity: quantity
+              };
+              console.log(quantity);
+              this.items.push(item);
+              // this.cartPdt.push(this.currProduct);
+              console.log(this.items);
+            });
+          
+          });
           console.log(this.items);
-        });
-      
-      });
-      console.log(this.items);
-  
+    }
     });
+  
      
   }
   
@@ -148,6 +135,18 @@ export class CartComponent implements OnInit {
     var total = parseFloat(this.getTotalPriceBeforeFees()) + parseFloat(this.getTax()) + parseFloat(shippingCost);
     total = total * 0.90;
     return (Math.round(total * 100) / 100).toFixed(2);
+  }
+
+  deleteProduct(product: Product){
+    this.productService.deleteProductById(1, product.product_id).subscribe(
+      (results) => {
+        if(results == 'Unprocessable Entity'){
+          console.log('error');
+        }
+        window.location.reload();
+        // this.ngOnInit();
+      }
+    );
   }
     
   

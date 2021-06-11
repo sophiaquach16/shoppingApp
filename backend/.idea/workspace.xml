@@ -6,12 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="ff748ff6-efd1-40b1-a05d-743df0be6235" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shoppingApp.iml" beforeDir="false" afterPath="$PROJECT_DIR$/shoppingApp.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/shoppingApp/controllers/controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/shoppingApp/controllers/controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/shoppingApp/controllers/controller.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/shoppingApp/controllers/controller.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/app/Main/cart/cart.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../src/app/Main/cart/cart.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/app/Main/cart/cart.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../src/app/Main/cart/cart.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/app/Main/home/productsMock.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../src/app/Main/home/productsMock.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/app/Services/products.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../src/app/Services/products.service.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,8 +32,21 @@
     <property name="project.structure.side.proportion" value="0.0" />
     <property name="settings.editor.selected.configurable" value="configurable.group.other" />
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.ShoppingApplication">
     <configuration type="Application" factoryName="Application" temporary="true">
+      <option name="MAIN_CLASS_NAME" value="com.shoppingApp.ShoppingApplication" />
+      <module name="shoppingApp" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.shoppingApp.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ShoppingApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.shoppingApp.ShoppingApplication" />
       <module name="shoppingApp" />
       <extension name="coverage">
@@ -52,7 +61,7 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application." />
+        <item itemvalue="Application.ShoppingApplication" />
       </list>
     </recent_temporary>
   </component>

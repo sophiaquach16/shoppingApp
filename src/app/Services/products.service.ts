@@ -46,4 +46,10 @@ export class ProductsService {
     return this.http.get<any>(url);
   }
 
+  deleteProductById(userId: number, productId: string){
+    let url = 'http://localhost:4200/api/'+userId+'/'+productId+'/removeProductFromCart';
+    // return this.http.request('delete', url, { body: { productId } });
+    return this.http.delete(url);
+  }
+
 }
